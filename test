@@ -1,0 +1,126 @@
+package com.backend.Controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.backend.repo.StudentRepo;
+
+
+
+@CrossOrigin
+@RestController
+public class Controller {
+	@GetMapping("/Students")
+	public List<StudentRepo> getStudents(){
+		return Service.getAllStudents();
+
+	}
+
+}
+
+
+package com.backend.repo;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+
+import com.backend.entity.Students_info;
+
+
+public interface StudentRepo extends JpaRepository<Students_info, java.lang.Integer> {
+
+}
+
+
+package com.backend.entity;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+
+@Entity
+public class Students_info {
+	@Id
+	private int id;
+	private String name;
+	private String roolno;
+	private String mobileno;
+	private String emailid;
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getRoolno() {
+		return roolno;
+	}
+	public void setRoolno(String roolno) {
+		this.roolno = roolno;
+	}
+	public String getMobileno() {
+		return mobileno;
+	}
+	public void setMobileno(String mobileno) {
+		this.mobileno = mobileno;
+	}
+	public String getEmailid() {
+		return emailid;
+	}
+	public void setEmailid(String emailid) {
+		this.emailid = emailid;
+	}
+	@Override
+	public String toString() {
+		return "Students [id=" + id + ", name=" + name + ", roolno=" + roolno + ", mobileno=" + mobileno + ", emailid="
+				+ emailid + "]";
+	}
+	public Students_info() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	public Students_info(int id, String name, String roolno, String mobileno, String emailid) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.roolno = roolno;
+		this.mobileno = mobileno;
+		this.emailid = emailid;
+	}
+	
+
+}
+
+package com.backend.Service;
+
+	import java.util.List;
+
+	import org.springframework.beans.factory.annotation.Autowired;
+	
+
+import com.backend.entity.Students_info;
+import com.backend.repo.StudentRepo;
+
+	
+
+@Service
+
+public class Service {
+		@Autowired
+		private StudentRepo repo;
+		public List<Students_info> getAllStudents(){
+			return repo.findAll();
+		}
+
+	}
+}
